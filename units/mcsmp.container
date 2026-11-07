@@ -1,12 +1,12 @@
 [Unit]
 Description=Vanilla Minecraft 26.3 (rootless podman)
-Documentation=file:///home/ajg/servers/npsmp/README.md
+Documentation=file:///home/ajg/servers/mcsmp/README.md
 After=network-online.target
 Wants=network-online.target
 
 [Container]
-ContainerName=np
-Image=localhost/np-server:25
+ContainerName=mcsmp
+Image=localhost/mcsmp-server:25
 Pull=never
 WorkingDir=/data
 
@@ -17,16 +17,16 @@ Exec=@user_jvm_args.txt -jar server.jar nogui
 # The repo is read-only to the server. Only the save, logs, crash reports,
 # and mutable config are writable, so a compromised JVM cannot rewrite the
 # scripts or git hooks the host runs.
-Volume=/home/ajg/servers/npsmp:/data:ro
-Volume=/home/ajg/servers/npsmp/world:/data/world:rw
-Volume=/home/ajg/servers/npsmp/logs:/data/logs:rw
-Volume=/home/ajg/servers/npsmp/crash-reports:/data/crash-reports:rw
-Volume=/home/ajg/servers/npsmp/server.properties:/data/server.properties:rw
-Volume=/home/ajg/servers/npsmp/whitelist.json:/data/whitelist.json:rw
-Volume=/home/ajg/servers/npsmp/ops.json:/data/ops.json:rw
-Volume=/home/ajg/servers/npsmp/banned-ips.json:/data/banned-ips.json:rw
-Volume=/home/ajg/servers/npsmp/banned-players.json:/data/banned-players.json:rw
-Volume=/home/ajg/servers/npsmp/usercache.json:/data/usercache.json:rw
+Volume=/home/ajg/servers/mcsmp:/data:ro
+Volume=/home/ajg/servers/mcsmp/world:/data/world:rw
+Volume=/home/ajg/servers/mcsmp/logs:/data/logs:rw
+Volume=/home/ajg/servers/mcsmp/crash-reports:/data/crash-reports:rw
+Volume=/home/ajg/servers/mcsmp/server.properties:/data/server.properties:rw
+Volume=/home/ajg/servers/mcsmp/whitelist.json:/data/whitelist.json:rw
+Volume=/home/ajg/servers/mcsmp/ops.json:/data/ops.json:rw
+Volume=/home/ajg/servers/mcsmp/banned-ips.json:/data/banned-ips.json:rw
+Volume=/home/ajg/servers/mcsmp/banned-players.json:/data/banned-players.json:rw
+Volume=/home/ajg/servers/mcsmp/usercache.json:/data/usercache.json:rw
 
 # Loopback only: the playit agent on the host is the only thing that may reach
 # the server. Nothing is published on the LAN or WAN.

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Minimal Minecraft RCON client for the np container.
+"""Minimal Minecraft RCON client for the mcsmp container.
 
 Reads rcon.password from ../server.properties. The container publishes RCON on
 127.0.0.1:25576 (25575 inside the container), so this connects to the host port
-unless NP_RCON_PORT says otherwise.
+unless MCSMP_RCON_PORT says otherwise.
 
     scripts/rcon.py list
     scripts/rcon.py whitelist add SomeName
@@ -16,7 +16,7 @@ import struct
 import sys
 
 PROPS = pathlib.Path(__file__).resolve().parent.parent / "server.properties"
-HOST_PORT = int(os.environ.get("NP_RCON_PORT", "25576"))
+HOST_PORT = int(os.environ.get("MCSMP_RCON_PORT", "25576"))
 
 
 def properties():

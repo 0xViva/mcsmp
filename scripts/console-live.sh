@@ -9,11 +9,11 @@ set -eu
 
 HISTORY=${1:-200}
 
-echo "=== np journal: last $HISTORY lines ==="
-journalctl --user -u np -n "$HISTORY" --no-pager || true
+echo "=== mcsmp journal: last $HISTORY lines ==="
+journalctl --user -u mcsmp -n "$HISTORY" --no-pager || true
 echo
 echo "=== live console ==="
 echo "Type a command and press Enter. Ctrl-b d detaches; Ctrl-b [ scrolls; q exits scroll mode."
 echo
 
-exec podman attach --sig-proxy=false np
+exec podman attach --sig-proxy=false mcsmp

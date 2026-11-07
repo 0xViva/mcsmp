@@ -1,6 +1,6 @@
 #!/bin/sh
-# Start the np server.
+# Start the mcsmp server.
 set -eu
 
-systemctl --user start np.service
-echo "np started"
+systemctl --user start mcsmp.service
+echo "mcsmp started"

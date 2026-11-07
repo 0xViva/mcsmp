@@ -3,7 +3,7 @@
 
 The host runs one shared playit agent (atm11's units/playit.service). A single
 agent can carry several tunnels, so this adds a second tunnel that forwards the
-agent's local 127.0.0.1:25566 to the np container.
+agent's local 127.0.0.1:25566 to the mcsmp container.
 
 Tunnel management normally happens at https://playit.gg/account/tunnels; this
 script is a small convenience wrapper around playit's agent-key API.
@@ -20,7 +20,7 @@ import urllib.error
 import urllib.request
 
 API = "https://api.playit.gg"
-NAME = "np-vanilla"
+NAME = "mcsmp-vanilla"
 LOCAL_IP = "127.0.0.1"
 LOCAL_PORT = 25566
 
@@ -74,7 +74,7 @@ def agent_id():
     return api("/v1/agents/rundata", {})["agent_id"]
 
 
-def find_np(items):
+def find_mcsmp(items):
     for tunnel in items:
         origin = (tunnel.get("origin") or {}).get("data") or {}
         if tunnel.get("name") == NAME and origin.get("local_port") == LOCAL_PORT:
@@ -99,7 +99,7 @@ def cmd_list():
 
 
 def cmd_create():
-    existing = find_np(tunnels())
+    existing = find_mcsmp(tunnels())
     if existing:
         print(f"tunnel already exists: {address(existing)}")
         return

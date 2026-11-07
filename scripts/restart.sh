@@ -1,6 +1,6 @@
 #!/bin/sh
-# Restart the np server (clean save on stop, then start again).
+# Restart the mcsmp server (clean save on stop, then start again).
 set -eu
 
-systemctl --user restart np.service
-echo "np restarted"
+systemctl --user restart mcsmp.service
+echo "mcsmp restarted"

@@ -1,17 +1,17 @@
 #!/bin/sh
-# Persistent server console for the np container.
+# Persistent server console for the mcsmp container.
 #
 #   ./console              attach (creates the session if needed)
 #   Ctrl-b d               detach; the console keeps running
 #   Ctrl-b [               scroll back; q exits scroll mode
 #
-# The first attach prints the last NP_CONSOLE_HISTORY journal lines before
+# The first attach prints the last MCSMP_CONSOLE_HISTORY journal lines before
 # switching to the live console. `podman attach` itself only shows output from
 # the moment it attaches, so this is how you get history in the pane.
 set -eu
 
-SESSION=${NP_CONSOLE_SESSION:-np-console}
-HISTORY=${NP_CONSOLE_HISTORY:-200}
+SESSION=${MCSMP_CONSOLE_SESSION:-mcsmp-console}
+HISTORY=${MCSMP_CONSOLE_HISTORY:-200}
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 
 exec tmux new-session -A -s "$SESSION" "$ROOT/scripts/console-live.sh $HISTORY"

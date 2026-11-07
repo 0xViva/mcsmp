@@ -1,4 +1,4 @@
-<h1 align="center">NPSMP</h1>
+<h1 align="center">MCSMP</h1>
 
 <p align="center"><strong>Vanilla Minecraft 26.3 in a rootless Podman container. No forwarded ports.</strong></p>
 
@@ -13,11 +13,11 @@
 > **Play now.** `jensen-angie.tun.ply.gg` (SRV). Use
 > `jensen-angie.tun.ply.gg:9369` if your client ignores SRV.
 
-NPSMP is a vanilla Minecraft server for the Norsk programmering community.
-It lives at `/home/ajg/servers/npsmp`, runs under systemd in a rootless Podman
+MCSMP is a vanilla Minecraft server for the Norsk programmering community.
+It lives at `/home/ajg/servers/mcsmp`, runs under systemd in a rootless Podman
 container, and reaches players through a playit.gg tunnel. Setup is in
 `scripts/`, `units/`, and `container/`. World snapshots are in `snapshots/`.
 Restore the latest with `scripts/restore-world.sh`. World seed is
 `6984882314756710026`.
 
-Unlicensed. Questions go to [GitHub Issues](https://github.com/0xViva/NPSMP/issues).
+Unlicensed. Questions go to [GitHub Issues](https://github.com/0xViva/mcsmp/issues).

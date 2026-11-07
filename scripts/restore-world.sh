@@ -20,8 +20,8 @@ case "$SNAPSHOT" in
 esac
 [ -f "$SNAPSHOT" ] || { echo "snapshot not found: $SNAPSHOT" >&2; exit 1; }
 
-systemctl --user stop np.service
+systemctl --user stop mcsmp.service
 rm -rf "$ROOT/world"
 tar -C "$ROOT" -xzf "$SNAPSHOT" ./world
-systemctl --user start np.service
+systemctl --user start mcsmp.service
 echo "restored $SNAPSHOT"

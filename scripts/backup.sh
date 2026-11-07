@@ -8,13 +8,13 @@ set -eu
 
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 
-# Optional off-site copy. Configure NP_BACKUP_REMOTE in ~/.config/np/backup.env.
-if [ -f "$HOME/.config/np/backup.env" ]; then
-    . "$HOME/.config/np/backup.env"
+# Optional off-site copy. Configure MCSMP_BACKUP_REMOTE in ~/.config/mcsmp/backup.env.
+if [ -f "$HOME/.config/mcsmp/backup.env" ]; then
+    . "$HOME/.config/mcsmp/backup.env"
 fi
 
-DEST=${NP_BACKUP_DIR:-"$ROOT/backups"}
-KEEP=${NP_BACKUP_KEEP:-14}
+DEST=${MCSMP_BACKUP_DIR:-"$ROOT/backups"}
+KEEP=${MCSMP_BACKUP_KEEP:-14}
 STAMP=$(date +%Y%m%d-%H%M%S)
 
 umask 077
@@ -25,19 +25,19 @@ exec 9>"$DEST/.lock"
 flock -n 9 || { echo "another backup is already running" >&2; exit 0; }
 
 was_active=0
-if systemctl --user is-active --quiet np.service; then
+if systemctl --user is-active --quiet mcsmp.service; then
     was_active=1
-    systemctl --user stop np.service
+    systemctl --user stop mcsmp.service
 fi
 
 cleanup() {
     if [ "$was_active" -eq 1 ]; then
-        systemctl --user start np.service
+        systemctl --user start mcsmp.service
     fi
 }
 trap cleanup EXIT INT TERM
 
-tar -C "$ROOT" -czf "$DEST/np-$STAMP.tar.gz" \
+tar -C "$ROOT" -czf "$DEST/mcsmp-$STAMP.tar.gz" \
     --exclude='./server.jar' \
     --exclude='./libraries' \
     --exclude='./versions' \
@@ -52,16 +52,16 @@ tar -C "$ROOT" -czf "$DEST/np-$STAMP.tar.gz" \
     --exclude='./world/session.lock' \
     .
 
-ls -1t "$DEST"/np-*.tar.gz 2>/dev/null | tail -n +$((KEEP + 1)) | while read -r f; do
+ls -1t "$DEST"/mcsmp-*.tar.gz 2>/dev/null | tail -n +$((KEEP + 1)) | while read -r f; do
     rm -f "$f"
 done
 
-if [ -n "${NP_BACKUP_REMOTE:-}" ]; then
-    echo "syncing to $NP_BACKUP_REMOTE"
+if [ -n "${MCSMP_BACKUP_REMOTE:-}" ]; then
+    echo "syncing to $MCSMP_BACKUP_REMOTE"
     rsync -a --delete --exclude='.lock' --chmod=D700,F600 \
         -e "ssh -o BatchMode=yes -o ConnectTimeout=15" \
         --timeout=300 \
-        "$DEST/" "$NP_BACKUP_REMOTE"
+        "$DEST/" "$MCSMP_BACKUP_REMOTE"
 fi
 
-echo "backup written: $DEST/np-$STAMP.tar.gz"
+echo "backup written: $DEST/mcsmp-$STAMP.tar.gz"

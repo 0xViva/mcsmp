@@ -4,13 +4,13 @@ set -eu
 
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 
-if [ -f "$HOME/.config/np/backup.env" ]; then
-    . "$HOME/.config/np/backup.env"
+if [ -f "$HOME/.config/mcsmp/backup.env" ]; then
+    . "$HOME/.config/mcsmp/backup.env"
 fi
 
-DEST=${NP_BACKUP_DIR:-"$ROOT/backups"}
-SNAPSHOTS=${NP_SNAPSHOT_DIR:-"$ROOT/snapshots"}
-KEEP=${NP_SNAPSHOT_KEEP:-5}
+DEST=${MCSMP_BACKUP_DIR:-"$ROOT/backups"}
+SNAPSHOTS=${MCSMP_SNAPSHOT_DIR:-"$ROOT/snapshots"}
+KEEP=${MCSMP_SNAPSHOT_KEEP:-5}
 DATE=$(date +%Y%m%d)
 
 umask 077
@@ -21,14 +21,14 @@ exec 8>"$DEST/.lock"
 flock -n 8 || { echo "another backup or snapshot is already running" >&2; exit 0; }
 
 was_active=0
-if systemctl --user is-active --quiet np.service; then
+if systemctl --user is-active --quiet mcsmp.service; then
     was_active=1
-    systemctl --user stop np.service
+    systemctl --user stop mcsmp.service
 fi
 
 cleanup() {
     if [ "$was_active" -eq 1 ]; then
-        systemctl --user start np.service
+        systemctl --user start mcsmp.service
     fi
 }
 trap cleanup EXIT INT TERM
